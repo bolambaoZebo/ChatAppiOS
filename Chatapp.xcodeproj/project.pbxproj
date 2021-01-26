@@ -84,6 +84,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		146E8CFA25C0572A0028DA50 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		146E8CFB25C057420028DA50 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				14B4D6D025BF198900E489E7 /* LogInPage */,
+				14B4D6D125BF199300E489E7 /* SignUpPage */,
+				14B4D6D225BF19AA00E489E7 /* ChatRoomPage */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
 		14B4D68125BF176000E489E7 = {
 			isa = PBXGroup;
 			children = (
@@ -110,11 +127,10 @@
 				14B4D68D25BF176000E489E7 /* AppDelegate.swift */,
 				14B4D68F25BF176000E489E7 /* SceneDelegate.swift */,
 				14B4D6C325BF183F00E489E7 /* Model */,
-				14B4D6C425BF184500E489E7 /* ViewController */,
-				14B4D69325BF176000E489E7 /* Main.storyboard */,
+				14B4D6C425BF184500E489E7 /* Views */,
+				146E8CFA25C0572A0028DA50 /* ViewModels */,
+				146E8CFB25C057420028DA50 /* Controllers */,
 				14B4D69925BF176100E489E7 /* Assets.xcassets */,
-				14B4D69B25BF176100E489E7 /* LaunchScreen.storyboard */,
-				14B4D69E25BF176100E489E7 /* Info.plist */,
 				14B4D69625BF176000E489E7 /* Chatapp.xcdatamodeld */,
 			);
 			path = Chatapp;
@@ -145,15 +161,15 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		14B4D6C425BF184500E489E7 /* ViewController */ = {
+		14B4D6C425BF184500E489E7 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				14B4D6D225BF19AA00E489E7 /* ChatRoomPage */,
-				14B4D6D125BF199300E489E7 /* SignUpPage */,
-				14B4D6D025BF198900E489E7 /* LogInPage */,
 				14B4D6F025BF1AC600E489E7 /* ViewController.swift */,
+				14B4D69325BF176000E489E7 /* Main.storyboard */,
+				14B4D69B25BF176100E489E7 /* LaunchScreen.storyboard */,
+				14B4D69E25BF176100E489E7 /* Info.plist */,
 			);
-			path = ViewController;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		14B4D6D025BF198900E489E7 /* LogInPage */ = {
