@@ -9,21 +9,26 @@ import UIKit
 
 class SignUpViewController: UIViewController {
 
+    @IBOutlet weak var usernameTextField: UITextField!
+    @IBOutlet weak var passwordTestField: UITextField!
+    @IBOutlet weak var termsAndConditionLabel: UIView!
+    @IBOutlet weak var signupButton: UIButton!
+    @IBOutlet weak var loginLabel: UILabel!
+    
+    var refrenceForTermsAndCondition : TermsAndCondition?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        title = "Chat app"
+        
+        prepareViews()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    fileprivate func prepareViews(){
+        if let refrenceForTermsAndCondition = Bundle.main.loadNibNamed("TermsAndCondition", owner: self, options: nil)?.first as? TermsAndCondition {
+            termsAndConditionLabel.addSubview(refrenceForTermsAndCondition)
+        }
     }
-    */
 
 }

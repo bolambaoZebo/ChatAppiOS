@@ -9,21 +9,30 @@ import UIKit
 
 class LogInViewController: UIViewController {
 
+    @IBOutlet weak var usernameTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var viewTermsAndCondition: UIView!
+    @IBOutlet weak var signupLabel: UILabel!
+    @IBOutlet weak var loginButton: UIButton!
+    
+    var refrenceForTermsAndCondition : TermsAndCondition?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        title = "Chat app"
+        prepareViews()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    fileprivate func prepareViews(){
+        
+        //setup terms and condition xib
+        if let refrenceForTermsAndCondition = Bundle.main.loadNibNamed("TermsAndCondition", owner: self, options: nil)?.first as? TermsAndCondition {
+            viewTermsAndCondition.addSubview(refrenceForTermsAndCondition)
+        }
+        
+        //setup button field
+        loginButton.layer.cornerRadius = 5
     }
-    */
-
+    
 }
