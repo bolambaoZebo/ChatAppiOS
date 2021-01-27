@@ -43,26 +43,34 @@ class SignUpViewController: UIViewController {
               print("Invalid email password")
                    return
         }
-        //register new user to firebase
-        FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) { [weak self] authResult, error in
-            guard let this = self else {
+        
+        let username = email.split(separator: "@")
+        
+        DatabaseManager.shared.userExists(with: email) { exits in
+            guard exits else {
+                print("user already exists!")
                 return
             }
-            guard let  result = authResult, error == nil else {
-                print("Error creating user\(error)")
-                return
-            }
-            
-            let user = result.user
-            print("created user \(user)")
-            
-            //after successful registration transition to login controller
-            guard let parentviewcontroller = this.presentingViewController,
-                  let storyboard = this.storyboard else {
-                return
-            }
-            this.dismiss(animated: true) {
-                ViewControllerManager.gotToViewController(from: parentviewcontroller, to: Controller.Login, storyboard: storyboard)
+            //register new user to firebase
+            FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) { [weak self] authResult, error in
+                guard let this = self else {
+                    return
+                }
+                guard let  result = authResult, error == nil else {
+                    print("Error creating user\(error)")
+                    return
+                }
+                
+                DatabaseManager.shared.insertUser(with: ChatAppUser(email: email, username: String(username[0])))
+                
+                //after successful registration transition to login controller
+                guard let parentviewcontroller = this.presentingViewController,
+                      let storyboard = this.storyboard else {
+                    return
+                }
+                this.dismiss(animated: true) {
+                    ViewControllerManager.gotToViewController(from: parentviewcontroller, to: Controller.Login, storyboard: storyboard)
+                }
             }
         }
     }
