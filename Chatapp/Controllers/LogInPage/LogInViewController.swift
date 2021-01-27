@@ -2,10 +2,14 @@
 //  LogInViewController.swift
 //  Chatapp
 //
-//  Created by dnamicro on 2021/01/25.
+//  Created by zebedee on 2021/01/25.
 //
 
 import UIKit
+import FirebaseAuth
+//import FBSDKLoginKit
+//import GoogleSignIn
+//import JGProgressHUD
 
 class LogInViewController: UIViewController {
 
@@ -19,10 +23,72 @@ class LogInViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Chat app"
+        
         prepareViews()
+        self.setupLabelTap()
     }
     
+    
+    // When the user click the sigup label
+    @objc func labelTapped(_ sender: UITapGestureRecognizer) {
+        
+        guard let parentviewcontroller = presentingViewController,
+              let storyboard = self.storyboard else {return}
+        
+        dismiss(animated: true) {
+            ViewControllerManager.gotToViewController(from: parentviewcontroller, to: Controller.Register, storyboard: storyboard)
+        }
+    }
+    
+    func setupLabelTap() {
+        let labelTap = UITapGestureRecognizer(target: self, action: #selector(self.labelTapped(_:)))
+        self.signupLabel.isUserInteractionEnabled = true
+        self.signupLabel.addGestureRecognizer(labelTap)
+    }
+    
+   // setup login up button tap
+    @IBAction func logInTappedButton(_ sender: Any) {
+        
+        usernameTextField.resignFirstResponder()
+        passwordTextField.resignFirstResponder()
+               
+        //validate user input
+        guard let email = usernameTextField.text,
+              let password = passwordTextField.text,
+              !email.isEmpty,
+              !password.isEmpty,
+              password.count >= 8, password.count <= 16,
+              email.count >= 8, email.count <= 16 else {
+              print("Invalid email password")
+                   return
+        }
+        //login new user to firebase
+        FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
+            guard let this = self else {
+                return
+            }
+            guard let  result = authResult, error == nil else {
+                print("Failed to login user with email\(error)")
+                return
+            }
+            
+            let user = result.user
+            print("logged in user \(user)")
+            
+            //after successfull login transition to ChatRoomViewController
+            guard let parentviewcontroller = this.presentingViewController,
+                  let storyboard = this.storyboard else {
+                return
+            }
+            this.dismiss(animated: true) {
+                ViewControllerManager.gotToViewController(from: parentviewcontroller, to: Controller.ChatViewController, storyboard: storyboard)
+            }
+           
+        }
+    }
+}
+// MARK: - Setup for views
+extension LogInViewController {
     
     fileprivate func prepareViews(){
         
@@ -30,9 +96,10 @@ class LogInViewController: UIViewController {
         if let refrenceForTermsAndCondition = Bundle.main.loadNibNamed("TermsAndCondition", owner: self, options: nil)?.first as? TermsAndCondition {
             viewTermsAndCondition.addSubview(refrenceForTermsAndCondition)
         }
-        
         //setup button field
         loginButton.layer.cornerRadius = 5
+        passwordTextField.isSecureTextEntry = true
+        
     }
-    
 }
+
