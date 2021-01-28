@@ -81,7 +81,9 @@ class LogInViewController: UIViewController {
                 return
             }
             this.dismiss(animated: true) {
-                ViewControllerManager.gotToViewController(from: parentviewcontroller, to: Controller.ChatViewController, storyboard: storyboard)
+                ViewControllerManager.gotToViewController(from: parentviewcontroller,
+                                                          to: Controller.ChatRoom,
+                                                          storyboard: storyboard)
             }
            
         }

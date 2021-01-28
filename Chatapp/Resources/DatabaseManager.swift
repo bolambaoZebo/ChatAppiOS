@@ -10,6 +10,25 @@ import FirebaseDatabase
 import MessageKit
 import CoreLocation
 
+
+struct ChatAppUser {
+//    let firstName: String
+    let email: String
+    let username: String
+
+    var safeEmail: String {
+        var safeEmail = username.replacingOccurrences(of: ".", with: "-")
+        safeEmail = safeEmail.replacingOccurrences(of: "@", with: "-")
+        return safeEmail
+    }
+
+    var profilePictureFileName: String {
+        //afraz9-gmail-com_profile_picture.png
+        return "\(safeEmail)_profile_picture.png"
+    }
+}
+
+
 /// Manager object to read and write data to real time firebase database
 final class DatabaseManager {
 
@@ -39,6 +58,111 @@ extension DatabaseManager {
     }
 
 }
+// MARK: - sending and recieving massage from realtime database
+extension DatabaseManager {
+    ///create a new conversation in the chatroom
+    public func createConversation(with otherEmail: String, message: Message, completion: @escaping (Bool) -> Void){
+//        guard let currentEmail = UserDefaults.standard.value(forKey: "email") as? String else {
+//            return
+//        }
+        
+        let room = "chatRoom"
+        
+        let safeEmail = DatabaseManager.safeEmail(emailAddress: room)
+        let ref = database.child("\(safeEmail)")
+        ref.observeSingleEvent(of: .value) { snapshot in
+            guard var userNode = snapshot.value as? [String: Any] else {
+                completion(false)
+                print("user not found")
+                return
+            }
+            
+            let messageDate = message.sentDate
+            let dateString = ChatViewController.dateFormatter.string(from: messageDate)
+            
+            var messageText = ""
+            switch message.kind {
+            
+            case .text(let messagetext):
+                messageText = messagetext
+            case .attributedText(_):
+                break
+            case .photo(_):
+                break
+            case .video(_):
+                break
+            case .location(_):
+                break
+            case .emoji(_):
+                break
+            case .audio(_):
+                break
+            case .contact(_):
+                break
+            case .linkPreview(_):
+                break
+            case .custom(_):
+                break
+            }
+            
+            let newConversationData: [String: Any] = [
+                "id": "conversation_\(message.messageId)",
+                "other_user_email": otherEmail,
+                "latest_message": [
+                    "date": dateString,
+                    "message": messageText,
+                    "is_read": false
+                ],
+            ]
+            if var conversations = userNode["conversations"] as? [[String: Any]]{
+               // converstaion array exists for current user
+               // you should append
+                
+                conversations.append(newConversationData)
+                userNode["conversations"] = conversations
+                ref.setValue(userNode, withCompletionBlock: { error, _ in
+                    guard error == nil else {
+                        completion(false)
+                        return
+                    }
+                    completion(true)
+                })
+            }
+            else{
+                //conversation array does NOT exist
+                // create it
+                userNode["conversations"] = [
+                    newConversationData
+                ]
+                
+                ref.setValue(userNode, withCompletionBlock: { error, _ in
+                    guard error == nil else {
+                        completion(false)
+                        return
+                    }
+                    completion(true)
+                })
+            }
+        }
+    }
+    
+    private func finishCreatingConversation(conversationId: String, message: Message, completion: @escaping (Bool) -> Void){
+        
+    }
+    ///fetches all conversation in the database
+    public func getAllConversations(for email: String, completion: @escaping (Result<String, Error>) -> Void){
+        
+    }
+    ///fetches message from conversation
+    public func getAllMessagesForConversation(with id: String, completion: @escaping (Result<String, Error>) -> Void){
+        
+    }
+    ///handle send messages
+    public func sendMessage(to conversation: String, message: Message, completion: @escaping (Bool) -> Void){
+        
+    }
+    
+}
 
 // MARK: - Account Mgmt
 extension DatabaseManager {
@@ -52,7 +176,8 @@ extension DatabaseManager {
 
         let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
         database.child(safeEmail).observeSingleEvent(of: .value, with: { snapshot in
-            guard snapshot.value as? [String: Any] != nil else {
+            print("Snapshot\(snapshot)")
+            guard snapshot.value as? [String: Any] == nil else {
                 completion(false)
                 return
             }
@@ -759,19 +884,4 @@ extension DatabaseManager {
 //
 //}
 //
-struct ChatAppUser {
-//    let firstName: String
-    let email: String
-    let username: String
 
-    var safeEmail: String {
-        var safeEmail = username.replacingOccurrences(of: ".", with: "-")
-        safeEmail = safeEmail.replacingOccurrences(of: "@", with: "-")
-        return safeEmail
-    }
-
-    var profilePictureFileName: String {
-        //afraz9-gmail-com_profile_picture.png
-        return "\(safeEmail)_profile_picture.png"
-    }
-}

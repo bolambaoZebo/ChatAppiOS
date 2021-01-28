@@ -30,7 +30,7 @@ class MainViewController: UIViewController {
             guard let storyboard = self.storyboard else {
                 return
             }
-            ViewControllerManager.gotToViewController(from: self, to: Controller.ChatViewController, storyboard: storyboard)
+            ViewControllerManager.gotToViewController(from: self, to: Controller.ChatRoom, storyboard: storyboard)
             
         }
     }

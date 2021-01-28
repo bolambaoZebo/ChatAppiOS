@@ -8,39 +8,57 @@
 import UIKit
 import MessageKit
 import FirebaseAuth
+import InputBarAccessoryView
 
 struct Message: MessageType {
-    var messageId: String
-    var sentDate: Date
-    var kind: MessageKind
-    var sender: SenderType
+   public var messageId: String
+   public var sentDate: Date
+   public var kind: MessageKind
+   public var sender: SenderType
 }
 
 struct Sender: SenderType {
-    var photoURL: String
-    var senderId: String
-    var displayName: String
+   public var photoURL: String
+   public var senderId: String
+   public var displayName: String
 }
 
 class ChatViewController: MessagesViewController {
     
+    public static var dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .long
+        formatter.locale = .current
+        return formatter
+    }()
     private var messages = [Message]()
     
-    private let selfSender = Sender(photoURL: "Strin", senderId: "1", displayName: "Joe Biden")
+    private var selfSender: Sender? {
+//        guard let email = UserDefaults.standard.value(forKey: "email") as? String else {
+//            return nil
+//        }
+       return Sender(photoURL: "",
+               senderId: "mark@gmail.com",
+               displayName: "Joe Biden")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        messages.append(Message(messageId: "1", sentDate: Date(), kind: .text("hello joe"), sender: selfSender))
+
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
+        messageInputBar.delegate = self
         prepareViews()
         prepareNavigationBar()
         
     }
     
-   
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        messageInputBar.inputTextView.becomeFirstResponder()
+    }
     
     
     //log out user from the chat room
@@ -50,7 +68,7 @@ class ChatViewController: MessagesViewController {
         }
         do {
             try FirebaseAuth.Auth.auth().signOut()
-            ViewControllerManager.gotToViewController(from: self, to: Controller.PopRootViewController, storyboard: storyboard)
+            ViewControllerManager.gotToViewController(from: self, to: Controller.PoptoRoot, storyboard: storyboard)
             print("Log out user")
         }catch {
             print("Failed to log out")
@@ -59,10 +77,51 @@ class ChatViewController: MessagesViewController {
 
 }
 
+// MARK: - send button delegate
+extension ChatViewController: InputBarAccessoryViewDelegate {
+    
+    func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
+        guard !text.replacingOccurrences(of: " ", with: "").isEmpty,
+              let selfSender = self.selfSender else {
+            print("#####\(UserDefaults.standard.value(forKey: "email"))")
+            print("selfSender Failded\(self.selfSender)")
+                return
+        }
+        
+        print("joe message \(text)")
+        
+        //send message to database
+        let message = Message(messageId: createMeassageId(), sentDate: Date(), kind: .text(text), sender: selfSender)
+        
+        DatabaseManager.shared.createConversation(with: "joe@gmail.com", message: message) { success in
+            
+            print(success)
+            if success {
+                print("message sent")
+            }else{
+                print("failed to send")
+            }
+        }
+        
+        messageInputBar.inputTextView.text = ""
+        
+    }
+    
+    private func createMeassageId() -> String {
+        let dateString = Self.dateFormatter.string(from: Date())
+        let randInt = Int.random(in: 1000..<100000000)
+        return "id\(dateString)_\(randInt)"
+    }
+}
+
 // MARK: - MessageCongtroller Delegate
 extension ChatViewController: MessagesDataSource, MessagesLayoutDelegate, MessagesDisplayDelegate {
     func currentSender() -> SenderType {
-        return selfSender
+        if let sender = selfSender {
+            return sender
+        }
+        fatalError("Self sender is nil*************________")
+        return Sender(photoURL: "", senderId: "1234", displayName: "joe")
     }
     
     func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {

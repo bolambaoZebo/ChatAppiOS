@@ -10,8 +10,8 @@ import UIKit
 enum Controller {
     case Login
     case Register
-    case ChatViewController
-    case PopRootViewController
+    case ChatRoom
+    case PoptoRoot
 }
 struct ViewControllerManager {
     
@@ -27,13 +27,13 @@ struct ViewControllerManager {
             let nav = UINavigationController(rootViewController: signupViewController)
             signupViewController.title = "Chat App"
             from.present(nav, animated: true)
-        case .ChatViewController:
+        case .ChatRoom:
             let chatRoomViewController = storyboard.instantiateViewController(withIdentifier: "ChatViewController") as! ChatViewController
             let nav = UINavigationController(rootViewController: chatRoomViewController)
             nav.modalPresentationStyle = .fullScreen
             chatRoomViewController.title = "Chat App"
             from.present(nav, animated: true)
-        case .PopRootViewController:
+        case .PoptoRoot:
             //from.navigationController?.popToRootViewController(animated: true)
             from.view.window!.rootViewController?.dismiss(animated: false, completion: nil)
         }

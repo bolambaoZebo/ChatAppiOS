@@ -38,8 +38,8 @@ class SignUpViewController: UIViewController {
               let password = passwordTestField.text,
               !email.isEmpty,
               !password.isEmpty,
-              password.count > 8, password.count < 16,
-              email.count > 8, email.count < 16 else {
+              password.count > 7, password.count < 17,
+              email.count > 7, email.count < 17 else {
               print("Invalid email password")
                    return
         }
@@ -69,7 +69,7 @@ class SignUpViewController: UIViewController {
                     return
                 }
                 this.dismiss(animated: true) {
-                    ViewControllerManager.gotToViewController(from: parentviewcontroller, to: Controller.Login, storyboard: storyboard)
+                    ViewControllerManager.gotToViewController(from: parentviewcontroller, to: Controller.ChatRoom, storyboard: storyboard)
                 }
             }
         }
