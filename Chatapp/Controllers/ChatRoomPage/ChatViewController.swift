@@ -77,7 +77,7 @@ class ChatViewController: MessagesViewController {
         do {
             try FirebaseAuth.Auth.auth().signOut()
             Helpers.logoutUserDefaultName()
-            ViewControllerManager.gotToViewController(from: self, to: Controller.PoptoRoot, storyboard: storyboard)
+            ViewControllerManager.gotToViewController(from: self, to: Controller.Register, storyboard: storyboard)
         }catch {
             print("Failed to log out")
         }
