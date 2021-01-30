@@ -7,5 +7,12 @@
 - Email/Pass Registration / Log In
 - Real Time Conversations
 
+# Get Started
+
+- git clone
+- rm -rf remove Pods Podfile.lock Chatapp.xcworkspace
+- pod install
+- open Chatapp.xcworkspace
+
 # Credits
 https://github.com/AfrazCodes/SwiftChatApp/blob/master/README.md
