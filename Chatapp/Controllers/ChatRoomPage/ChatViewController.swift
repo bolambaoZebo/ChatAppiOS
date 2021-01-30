@@ -174,7 +174,6 @@ extension ChatViewController {
         
         messageInputBar.inputTextView.becomeFirstResponder()
         messageInputBar.inputTextView.placeholder = "Strat a new message"
-        messageInputBar.inputTextView.backgroundColor = inputTextViewColor
         messageInputBar.inputTextView.layer.cornerRadius = 5
     }
     
