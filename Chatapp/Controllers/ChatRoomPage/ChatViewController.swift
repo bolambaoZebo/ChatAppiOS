@@ -167,6 +167,8 @@ extension ChatViewController {
         messagesCollectionView.messagesCollectionViewFlowLayout.setMessageOutgoingMessageBottomLabelAlignment(LabelAlignment(textAlignment: .right, textInsets: .zero))
         messagesCollectionView.messagesCollectionViewFlowLayout.setMessageOutgoingAvatarSize(.zero)
         messagesCollectionView.messagesCollectionViewFlowLayout.setMessageIncomingAvatarSize(.zero)
+        messageInputBar.sendButton.backgroundColor = .darkGray
+        messageInputBar.sendButton.layer.cornerRadius = 5
         messageInputBar.inputTextView.becomeFirstResponder()
     }
     
@@ -184,6 +186,11 @@ extension ChatViewController {
         button.heightAnchor.constraint(equalToConstant: buttonHeight).isActive = true
         self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: button)
     }
+
+}
+
+// MARK: - public date formatter
+extension ChatViewController {
     
     public static var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -192,5 +199,6 @@ extension ChatViewController {
         formatter.locale = .current
         return formatter
     }()
+    
 }
 

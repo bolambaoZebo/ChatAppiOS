@@ -1,8 +1,8 @@
 //
-//  TermsAndCondition.swift
+//  LogInViewController.swift
 //  Chatapp
 //
-//  Created by dnamicro on 2021/01/27.
+//  Created by zebedee on 2021/01/25.
 //
 
 import UIKit
