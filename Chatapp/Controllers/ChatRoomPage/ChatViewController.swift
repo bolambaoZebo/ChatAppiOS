@@ -63,9 +63,9 @@ class ChatViewController: MessagesViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        messageInputBar.inputTextView.becomeFirstResponder()
+
+     
         let usersmessages = listenForMessages(id: "chatroom", shouldScrollToBottom: true)
-        print("######\(usersmessages)")
     }
     
     
@@ -77,7 +77,7 @@ class ChatViewController: MessagesViewController {
         do {
             try FirebaseAuth.Auth.auth().signOut()
             Helpers.logoutUserDefaultName()
-            ViewControllerManager.gotToViewController(from: self, to: Controller.PoptoRoot, storyboard: storyboard)
+            ViewControllerManager.gotToViewController(from: self, to: Controller.Register, storyboard: storyboard)
         }catch {
             print("Failed to log out")
         }
@@ -147,21 +147,41 @@ extension ChatViewController: MessagesDataSource, MessagesLayoutDelegate, Messag
         return messages.count
     }
     
+    func messageBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+        let dateString = message.sender.displayName
+            return NSAttributedString(string: dateString, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption2)])
+    }
     
+    func messageBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return 10
+    }
+    
+ 
 }
 
 // MARK: - Setup chatviewcontroller views
 extension ChatViewController {
     
     func prepareViews(){
-    
+        
+        messagesCollectionView.messagesCollectionViewFlowLayout.setMessageIncomingMessageBottomLabelAlignment(LabelAlignment(textAlignment: .left, textInsets: .zero))
+        messagesCollectionView.messagesCollectionViewFlowLayout.setMessageOutgoingMessageBottomLabelAlignment(LabelAlignment(textAlignment: .right, textInsets: .zero))
+        messagesCollectionView.messagesCollectionViewFlowLayout.setMessageOutgoingAvatarSize(.zero)
+        messagesCollectionView.messagesCollectionViewFlowLayout.setMessageIncomingAvatarSize(.zero)
+        
+        messageInputBar.sendButton.backgroundColor = .darkGray
+        messageInputBar.sendButton.layer.cornerRadius = 5
+        
+        messageInputBar.inputTextView.becomeFirstResponder()
+        messageInputBar.inputTextView.placeholder = "Strat a new message"
+        messageInputBar.inputTextView.backgroundColor = inputTextViewColor
+        messageInputBar.inputTextView.layer.cornerRadius = 5
     }
     
     
     fileprivate func prepareNavigationBar(){
         let buttonWidth = CGFloat(85)
         let buttonHeight = CGFloat(35)
-        
         let button = UIButton(type: .custom)
         button.setTitle("Log out", for: .normal)
         button.setTitleColor(.white, for: .normal)
@@ -172,6 +192,11 @@ extension ChatViewController {
         button.heightAnchor.constraint(equalToConstant: buttonHeight).isActive = true
         self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: button)
     }
+
+}
+
+// MARK: - public date formatter
+extension ChatViewController {
     
     public static var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -180,5 +205,6 @@ extension ChatViewController {
         formatter.locale = .current
         return formatter
     }()
+    
 }
 

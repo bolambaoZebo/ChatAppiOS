@@ -5,6 +5,11 @@
 //  Created by Afraz Siddiqui on 6/7/20.
 //  Copyright © 2020 ASN GROUP LLC. All rights reserved.
 //
+
+//  Rewrite the code
+//  Created by zebedee on 2021/01/25.
+
+
 import Foundation
 import FirebaseDatabase
 import MessageKit
@@ -20,11 +25,6 @@ struct ChatAppUser {
         var safeEmail = username.replacingOccurrences(of: ".", with: "-")
         safeEmail = safeEmail.replacingOccurrences(of: "@", with: "-")
         return safeEmail
-    }
-
-    var profilePictureFileName: String {
-        //afraz9-gmail-com_profile_picture.png
-        return "\(safeEmail)_profile_picture.png"
     }
 }
 
@@ -44,17 +44,6 @@ final class DatabaseManager {
     }
 }
 
-extension DatabaseManager {
-    public func getDataFor(path: String, completion: @escaping (Result<Any, Error>) -> Void) {
-          database.child("\(path)").observeSingleEvent(of: .value) { snapshot in
-              guard let value = snapshot.value else {
-                  completion(.failure(DatabaseError.failedToFetch))
-                  return
-              }
-              completion(.success(value))
-          }
-      }
-}
 
 // MARK: - sending and recieving massage from realtime database
 extension DatabaseManager {
@@ -154,10 +143,6 @@ extension DatabaseManager {
         }
     }
     
-    ///fetches all conversation in the database
-    public func getAllConversations(for email: String, completion: @escaping (Result<String, Error>) -> Void){
-        
-    }
     ///fetches message from conversation
     public func getAllMessagesForConversation(with id: String, completion: @escaping (Result<[Message], Error>) -> Void){
         database.child("\(id)/messages").observe(.value, with: { snapshot in
@@ -428,18 +413,6 @@ extension DatabaseManager {
         database.child(user.safeEmail).setValue([
                 "username": user.username])
       
-    }
-
-    /// Gets all users from database
-    public func getAllUsers(completion: @escaping (Result<[[String: String]], Error>) -> Void) {
-        database.child("users").observeSingleEvent(of: .value, with: { snapshot in
-            guard let value = snapshot.value as? [[String: String]] else {
-                completion(.failure(DatabaseError.failedToFetch))
-                return
-            }
-
-            completion(.success(value))
-        })
     }
 
     public enum DatabaseError: Error {

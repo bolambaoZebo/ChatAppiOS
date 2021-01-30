@@ -1,8 +1,8 @@
 //
-//  Helper.swift
+//  LogInViewController.swift
 //  Chatapp
 //
-//  Created by dnamicro on 2021/01/30.
+//  Created by zebedee on 2021/01/25.
 //
 
 import UIKit
@@ -22,5 +22,11 @@ struct Helpers {
         defaults.removeObject(forKey: "email")
         defaults.synchronize()
         print("\(UserDefaults.standard.value(forKey: "username") ?? "User is logout")")
+    }
+    
+    static func createEmailForUser(username: String) -> String {
+        let newUsername = username.split(separator: "@")
+        print("\(String(newUsername.first!))")
+        return "\(String(newUsername.first!))@gmail.com"
     }
 }

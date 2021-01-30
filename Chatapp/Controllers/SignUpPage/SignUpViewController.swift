@@ -8,14 +8,15 @@
 import UIKit
 import FirebaseAuth
 import JGProgressHUD
+import Material
 
 class SignUpViewController: UIViewController {
 
     private let spinner = JGProgressHUD(style: .dark)
     
     
-    @IBOutlet weak var usernameTextField: UITextField!
-    @IBOutlet weak var passwordTestField: UITextField!
+    @IBOutlet weak var usernameTextField: CustomTextField!
+    @IBOutlet weak var passwordTestField: CustomTextField!
     @IBOutlet weak var termsAndConditionLabel: UIView!
     @IBOutlet weak var signupButton: UIButton!
     @IBOutlet weak var loginLabel: UILabel!
@@ -45,6 +46,8 @@ class SignUpViewController: UIViewController {
               password.count > 7, password.count < 17,
               email.count > 7, email.count < 17 else {
               print("Invalid email password")
+            usernameTextField.isErrorRevealed = true
+            passwordTestField.isErrorRevealed = true
                    return
         }
         
@@ -63,6 +66,13 @@ class SignUpViewController: UIViewController {
 
                 DispatchQueue.main.async {
                     this.spinner.dismiss()
+                    if error != nil {
+                        this.usernameTextField.isErrorRevealed = true
+                        this.passwordTestField.isErrorRevealed = true
+                    }else{
+                        this.usernameTextField.isErrorRevealed = false
+                        this.passwordTestField.isErrorRevealed = false
+                    }
                 }
                 guard let  result = authResult, error == nil else {
                     print("Error creating user\(error)")
@@ -120,7 +130,11 @@ extension SignUpViewController {
         }
         //setup button field
         signupButton.layer.cornerRadius = 5
+        
         passwordTestField.isSecureTextEntry = true
+        passwordTestField.applyStyle(error: "value is incorrect")
+        usernameTextField.applyStyle(error: "value is incorrect")
+        
     }
     
 }

@@ -9,7 +9,8 @@
 /* Begin PBXBuildFile section */
 		146B379625C17FDE00264DFF /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146B379525C17FDE00264DFF /* ChatViewController.swift */; };
 		146E8D1825C06E700028DA50 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146E8D1725C06E700028DA50 /* MainViewController.swift */; };
-		148D999725C1CFCC007AE2E3 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148D999625C1CFCC007AE2E3 /* DatabaseManager.swift */; };
+		1477DF0B25C5E70C00A3CB00 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1477DF0A25C5E70C00A3CB00 /* CustomTextField.swift */; };
+		149E2AF025C57E1200B90FA2 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149E2AEF25C57E1200B90FA2 /* DatabaseManager.swift */; };
 		14B4D68E25BF176000E489E7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B4D68D25BF176000E489E7 /* AppDelegate.swift */; };
 		14B4D69025BF176000E489E7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B4D68F25BF176000E489E7 /* SceneDelegate.swift */; };
 		14B4D69525BF176000E489E7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14B4D69325BF176000E489E7 /* Main.storyboard */; };
@@ -25,7 +26,6 @@
 		14BC900325C08D1C00B28720 /* TermsAndCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BC900225C08D1C00B28720 /* TermsAndCondition.swift */; };
 		14BC900825C08D3300B28720 /* TermsAndCondition.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14BC900725C08D3300B28720 /* TermsAndCondition.xib */; };
 		14DE634F25C48BB800BC08BD /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DE634E25C48BB800BC08BD /* Helpers.swift */; };
-		14DE64D725C4D8D700BC08BD /* ConversationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DE64D625C4D8D700BC08BD /* ConversationTableViewCell.swift */; };
 		14DE64DC25C4DFDC00BC08BD /* ConversationModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DE64DB25C4DFDC00BC08BD /* ConversationModels.swift */; };
 		14DE64E125C4DFF000BC08BD /* ChatModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DE64E025C4DFF000BC08BD /* ChatModels.swift */; };
 		33122B2966421319B22297A8 /* Pods_Chatapp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F95B1A3F4C54CEE00293E94 /* Pods_Chatapp.framework */; };
@@ -54,7 +54,8 @@
 		144FF054906107F3EE8492E2 /* Pods-ChatappTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatappTests.debug.xcconfig"; path = "Target Support Files/Pods-ChatappTests/Pods-ChatappTests.debug.xcconfig"; sourceTree = "<group>"; };
 		146B379525C17FDE00264DFF /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		146E8D1725C06E700028DA50 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
-		148D999625C1CFCC007AE2E3 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		1477DF0A25C5E70C00A3CB00 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		149E2AEF25C57E1200B90FA2 /* DatabaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		14B4D68A25BF176000E489E7 /* Chatapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chatapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		14B4D68D25BF176000E489E7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		14B4D68F25BF176000E489E7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -77,7 +78,6 @@
 		14BC900225C08D1C00B28720 /* TermsAndCondition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndCondition.swift; sourceTree = "<group>"; };
 		14BC900725C08D3300B28720 /* TermsAndCondition.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TermsAndCondition.xib; sourceTree = "<group>"; };
 		14DE634E25C48BB800BC08BD /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
-		14DE64D625C4D8D700BC08BD /* ConversationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationTableViewCell.swift; sourceTree = "<group>"; };
 		14DE64DB25C4DFDC00BC08BD /* ConversationModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationModels.swift; sourceTree = "<group>"; };
 		14DE64E025C4DFF000BC08BD /* ChatModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModels.swift; sourceTree = "<group>"; };
 		5C289EECDC92768A16B8E755 /* Pods-Chatapp-ChatappUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chatapp-ChatappUITests.debug.xcconfig"; path = "Target Support Files/Pods-Chatapp-ChatappUITests/Pods-Chatapp-ChatappUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -117,17 +117,9 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		146E8CFA25C0572A0028DA50 /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModels;
-			sourceTree = "<group>";
-		};
 		146E8CFB25C057420028DA50 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				14DE64CF25C4D81500BC08BD /* ConversationTableViewCells */,
 				146E8D1625C06E4A0028DA50 /* MainPage */,
 				14B4D6D025BF198900E489E7 /* LogInPage */,
 				14B4D6D125BF199300E489E7 /* SignUpPage */,
@@ -141,6 +133,7 @@
 			children = (
 				14DE634E25C48BB800BC08BD /* Helpers.swift */,
 				14B65EE625C1397200048148 /* ViewControllerManager.swift */,
+				149E2AEF25C57E1200B90FA2 /* DatabaseManager.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -148,6 +141,7 @@
 		146E8D0025C0583F0028DA50 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
+				14B4D69B25BF176100E489E7 /* LaunchScreen.storyboard */,
 				14B4D69325BF176000E489E7 /* Main.storyboard */,
 			);
 			path = Storyboards;
@@ -168,6 +162,14 @@
 				14BC900725C08D3300B28720 /* TermsAndCondition.xib */,
 			);
 			path = TermsAndCondition;
+			sourceTree = "<group>";
+		};
+		1477DF0325C5E6DA00A3CB00 /* CustomTextField */ = {
+			isa = PBXGroup;
+			children = (
+				1477DF0A25C5E70C00A3CB00 /* CustomTextField.swift */,
+			);
+			path = CustomTextField;
 			sourceTree = "<group>";
 		};
 		14B4D68125BF176000E489E7 = {
@@ -201,10 +203,8 @@
 				14B4D69625BF176000E489E7 /* Chatapp.xcdatamodeld */,
 				14B4D69E25BF176100E489E7 /* Info.plist */,
 				146E8CFF25C0581D0028DA50 /* Resources */,
-				14DE631425C4770200BC08BD /* Database */,
 				14B4D6C325BF183F00E489E7 /* Model */,
 				14B4D6C425BF184500E489E7 /* Views */,
-				146E8CFA25C0572A0028DA50 /* ViewModels */,
 				146E8CFB25C057420028DA50 /* Controllers */,
 			);
 			path = Chatapp;
@@ -240,10 +240,10 @@
 		14B4D6C425BF184500E489E7 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				1477DF0325C5E6DA00A3CB00 /* CustomTextField */,
 				146E8D2825C0857C0028DA50 /* TermsAndCondition */,
 				146E8D0025C0583F0028DA50 /* Storyboards */,
 				14B4D69925BF176100E489E7 /* Assets.xcassets */,
-				14B4D69B25BF176100E489E7 /* LaunchScreen.storyboard */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -270,22 +270,6 @@
 				146B379525C17FDE00264DFF /* ChatViewController.swift */,
 			);
 			path = ChatRoomPage;
-			sourceTree = "<group>";
-		};
-		14DE631425C4770200BC08BD /* Database */ = {
-			isa = PBXGroup;
-			children = (
-				148D999625C1CFCC007AE2E3 /* DatabaseManager.swift */,
-			);
-			path = Database;
-			sourceTree = "<group>";
-		};
-		14DE64CF25C4D81500BC08BD /* ConversationTableViewCells */ = {
-			isa = PBXGroup;
-			children = (
-				14DE64D625C4D8D700BC08BD /* ConversationTableViewCell.swift */,
-			);
-			path = ConversationTableViewCells;
 			sourceTree = "<group>";
 		};
 		DF163848D1B7909C75AAAF36 /* Pods */ = {
@@ -551,17 +535,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1477DF0B25C5E70C00A3CB00 /* CustomTextField.swift in Sources */,
 				14DE634F25C48BB800BC08BD /* Helpers.swift in Sources */,
 				14DE64DC25C4DFDC00BC08BD /* ConversationModels.swift in Sources */,
+				149E2AF025C57E1200B90FA2 /* DatabaseManager.swift in Sources */,
 				146E8D1825C06E700028DA50 /* MainViewController.swift in Sources */,
 				14DE64E125C4DFF000BC08BD /* ChatModels.swift in Sources */,
 				14B4D6DC25BF1A1200E489E7 /* SignUpViewController.swift in Sources */,
-				148D999725C1CFCC007AE2E3 /* DatabaseManager.swift in Sources */,
 				14B4D69825BF176000E489E7 /* Chatapp.xcdatamodeld in Sources */,
 				14B4D68E25BF176000E489E7 /* AppDelegate.swift in Sources */,
 				14B4D6E725BF1A3900E489E7 /* LogInViewController.swift in Sources */,
 				14B4D69025BF176000E489E7 /* SceneDelegate.swift in Sources */,
-				14DE64D725C4D8D700BC08BD /* ConversationTableViewCell.swift in Sources */,
 				14B65EE725C1397200048148 /* ViewControllerManager.swift in Sources */,
 				146B379625C17FDE00264DFF /* ChatViewController.swift in Sources */,
 				14BC900325C08D1C00B28720 /* TermsAndCondition.swift in Sources */,
