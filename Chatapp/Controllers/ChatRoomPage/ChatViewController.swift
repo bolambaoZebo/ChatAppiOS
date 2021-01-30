@@ -10,38 +10,44 @@ import MessageKit
 import FirebaseAuth
 import InputBarAccessoryView
 
-struct Message: MessageType {
-   public var messageId: String
-   public var sentDate: Date
-   public var kind: MessageKind
-   public var sender: SenderType
-}
-
-struct Sender: SenderType {
-   public var photoURL: String
-   public var senderId: String
-   public var displayName: String
-}
 
 class ChatViewController: MessagesViewController {
-    
-    public static var dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .long
-        formatter.locale = .current
-        return formatter
-    }()
+   
     private var messages = [Message]()
     
     private var selfSender: Sender? {
-//        guard let email = UserDefaults.standard.value(forKey: "email") as? String else {
-//            return nil
-//        }
+        guard let email = UserDefaults.standard.value(forKey: "email") as? String,
+              let username = UserDefaults.standard.value(forKey: "username") as? String else {
+            return nil
+        }
        return Sender(photoURL: "",
-               senderId: "mark@gmail.com",
-               displayName: "Joe Biden")
+               senderId: email,
+               displayName: username)
     }
+    
+    private func listenForMessages(id: String, shouldScrollToBottom: Bool) {
+           DatabaseManager.shared.getAllMessagesForConversation(with: id, completion: { [weak self] result in
+               switch result {
+               case .success(let messages):
+                   print("success in getting messages: \(messages)")
+                   guard !messages.isEmpty else {
+                       print("messages are empty")
+                       return
+                   }
+                   self?.messages = messages
+
+                   DispatchQueue.main.async {
+                       self?.messagesCollectionView.reloadDataAndKeepOffset()
+
+                       if shouldScrollToBottom {
+                        self?.messagesCollectionView.scrollToLastItem()
+                       }
+                   }
+               case .failure(let error):
+                   print("failed to get messages: \(error)")
+               }
+           })
+       }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,6 +64,8 @@ class ChatViewController: MessagesViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         messageInputBar.inputTextView.becomeFirstResponder()
+        let usersmessages = listenForMessages(id: "chatroom", shouldScrollToBottom: true)
+        print("######\(usersmessages)")
     }
     
     
@@ -68,8 +76,8 @@ class ChatViewController: MessagesViewController {
         }
         do {
             try FirebaseAuth.Auth.auth().signOut()
+            Helpers.logoutUserDefaultName()
             ViewControllerManager.gotToViewController(from: self, to: Controller.PoptoRoot, storyboard: storyboard)
-            print("Log out user")
         }catch {
             print("Failed to log out")
         }
@@ -77,25 +85,27 @@ class ChatViewController: MessagesViewController {
 
 }
 
+
 // MARK: - send button delegate
 extension ChatViewController: InputBarAccessoryViewDelegate {
     
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
         guard !text.replacingOccurrences(of: " ", with: "").isEmpty,
-              let selfSender = self.selfSender else {
-            print("#####\(UserDefaults.standard.value(forKey: "email"))")
-            print("selfSender Failded\(self.selfSender)")
+              let selfSender = self.selfSender,
+              let userName = UserDefaults.standard.value(forKey: "username") as? String,
+              let email = UserDefaults.standard.value(forKey: "email") as? String else {
                 return
         }
         
-        print("joe message \(text)")
+        print("\(email) message \(text)")
         
         //send message to database
-        let message = Message(messageId: createMeassageId(), sentDate: Date(), kind: .text(text), sender: selfSender)
+        let message = Message(sender: selfSender, messageId: createMeassageId(), sentDate: Date(), kind: .text(text))
         
-        DatabaseManager.shared.createConversation(with: "joe@gmail.com", message: message) { success in
+        DatabaseManager.shared.createConversation(with: "email", name: String(userName ?? "anonymous"), messageKind: message) { success in
             
             print(success)
+            
             if success {
                 print("message sent")
             }else{
@@ -108,9 +118,15 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
     }
     
     private func createMeassageId() -> String {
+        
+        guard let currentEmail = UserDefaults.standard.value(forKey: "email") as? String else {
+            return "no currentEmail"
+        }
+        
+        let safeEmail = DatabaseManager.safeEmail(emailAddress: currentEmail)
         let dateString = Self.dateFormatter.string(from: Date())
         let randInt = Int.random(in: 1000..<100000000)
-        return "id\(dateString)_\(randInt)"
+        return "id\(dateString)_\(randInt)_\(safeEmail)"
     }
 }
 
@@ -120,8 +136,7 @@ extension ChatViewController: MessagesDataSource, MessagesLayoutDelegate, Messag
         if let sender = selfSender {
             return sender
         }
-        fatalError("Self sender is nil*************________")
-        return Sender(photoURL: "", senderId: "1234", displayName: "joe")
+        return Sender(photoURL: "", senderId: "", displayName: "")
     }
     
     func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {
@@ -157,5 +172,13 @@ extension ChatViewController {
         button.heightAnchor.constraint(equalToConstant: buttonHeight).isActive = true
         self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: button)
     }
+    
+    public static var dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .long
+        formatter.locale = .current
+        return formatter
+    }()
 }
 

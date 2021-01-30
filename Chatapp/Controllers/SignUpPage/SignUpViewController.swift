@@ -7,9 +7,13 @@
 
 import UIKit
 import FirebaseAuth
+import JGProgressHUD
 
 class SignUpViewController: UIViewController {
 
+    private let spinner = JGProgressHUD(style: .dark)
+    
+    
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTestField: UITextField!
     @IBOutlet weak var termsAndConditionLabel: UIView!
@@ -44,8 +48,8 @@ class SignUpViewController: UIViewController {
                    return
         }
         
-        let username = email.split(separator: "@")
-        
+        spinner.show(in: view)
+                  
         DatabaseManager.shared.userExists(with: email) { exits in
             guard exits else {
                 print("user already exists!")
@@ -56,13 +60,19 @@ class SignUpViewController: UIViewController {
                 guard let this = self else {
                     return
                 }
+
+                DispatchQueue.main.async {
+                    this.spinner.dismiss()
+                }
                 guard let  result = authResult, error == nil else {
                     print("Error creating user\(error)")
                     return
                 }
                 
-                DatabaseManager.shared.insertUser(with: ChatAppUser(email: email, username: String(username[0])))
-                
+                let user = result.user.value(forKey: "email") as? String
+                Helpers.cearteDefautUsername(user)
+                let username = UserDefaults.standard.value(forKey: "username") as? String
+                DatabaseManager.shared.insertUser(with: ChatAppUser(email: email, username: username ?? ""))
                 //after successful registration transition to login controller
                 guard let parentviewcontroller = this.presentingViewController,
                       let storyboard = this.storyboard else {
@@ -75,6 +85,8 @@ class SignUpViewController: UIViewController {
         }
     }
     
+   
+    
     @objc func labelTapped(_ sender: UITapGestureRecognizer) {
         print("when the login label is tapped")
         
@@ -86,19 +98,19 @@ class SignUpViewController: UIViewController {
             ViewControllerManager.gotToViewController(from: parentviewcontroller, to: Controller.Login, storyboard: storyboard)
         }
     }
-        
+
+    
+}
+
+extension SignUpViewController {
+    
+    // func the tap gesture of signup button
     func setupLabelTap() {
         let labelTap = UITapGestureRecognizer(target: self, action: #selector(self.labelTapped(_:)))
         self.loginLabel.isUserInteractionEnabled = true
         self.loginLabel.addGestureRecognizer(labelTap)
         
     }
-        
-    
-}
-
-extension SignUpViewController {
-    
     // preparation for all the view to load up
     fileprivate func prepareViews(){
         

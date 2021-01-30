@@ -23,7 +23,8 @@
                                 <rect key="frame" x="12" y="461" width="390" height="50"/>
                                 <color key="backgroundColor" red="0.35853207110000002" green="0.553786695" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="wQR-6J-Wmg"/>
+                                    <constraint firstAttribute="height" constant="50" id="p4c-LN-EtR"/>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="50" id="wQR-6J-Wmg"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
                                 <state key="normal" title="Sign up">
@@ -33,12 +34,11 @@
                                     <action selector="signupButtonTapped:" destination="EOk-0T-PQ2" eventType="touchUpInside" id="l2j-19-fg0"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V67-mJ-YaZ">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V67-mJ-YaZ">
                                 <rect key="frame" x="12" y="525" width="390" height="50"/>
                                 <color key="backgroundColor" red="0.59980148079999995" green="0.90500408409999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="hn2-ET-rOi"/>
-                                    <constraint firstAttribute="width" constant="390" id="t4s-ZU-F0M"/>
+                                    <constraint firstAttribute="height" constant="51" id="hn2-ET-rOi"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
                                 <state key="normal" title="Login">
@@ -52,17 +52,19 @@
                         <viewLayoutGuide key="safeArea" id="Nv4-uh-0q5"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="V67-mJ-YaZ" firstAttribute="leading" secondItem="dwv-SG-pTh" secondAttribute="leading" id="05M-ei-JBi"/>
+                            <constraint firstItem="V67-mJ-YaZ" firstAttribute="leading" relation="lessThanOrEqual" secondItem="dwv-SG-pTh" secondAttribute="leading" id="05M-ei-JBi"/>
                             <constraint firstItem="Nv4-uh-0q5" firstAttribute="bottom" secondItem="ura-4D-8qN" secondAttribute="bottom" constant="36" id="0wD-r4-z3U"/>
                             <constraint firstItem="Nv4-uh-0q5" firstAttribute="trailing" secondItem="V67-mJ-YaZ" secondAttribute="trailing" constant="12" id="5Zg-EK-5bU"/>
-                            <constraint firstItem="ura-4D-8qN" firstAttribute="centerX" secondItem="dwv-SG-pTh" secondAttribute="centerX" id="8hZ-C9-Dep"/>
+                            <constraint firstItem="ura-4D-8qN" firstAttribute="centerX" relation="lessThanOrEqual" secondItem="dwv-SG-pTh" secondAttribute="centerX" id="8hZ-C9-Dep"/>
                             <constraint firstItem="ura-4D-8qN" firstAttribute="top" secondItem="Nv4-uh-0q5" secondAttribute="top" id="B9o-1L-URx"/>
+                            <constraint firstItem="dwv-SG-pTh" firstAttribute="top" secondItem="Nv4-uh-0q5" secondAttribute="top" constant="417" id="Csk-NS-HoX"/>
+                            <constraint firstItem="V67-mJ-YaZ" firstAttribute="top" secondItem="dwv-SG-pTh" secondAttribute="bottom" constant="14" id="Hk1-QX-5Pi"/>
                             <constraint firstItem="V67-mJ-YaZ" firstAttribute="leading" secondItem="Nv4-uh-0q5" secondAttribute="leading" constant="12" id="PUu-WV-2b2"/>
-                            <constraint firstItem="dwv-SG-pTh" firstAttribute="top" secondItem="Nv4-uh-0q5" secondAttribute="top" constant="417" id="WgA-zW-DCb"/>
                             <constraint firstItem="ura-4D-8qN" firstAttribute="leading" secondItem="Nv4-uh-0q5" secondAttribute="leading" id="cXQ-25-7JT"/>
-                            <constraint firstItem="Nv4-uh-0q5" firstAttribute="trailing" secondItem="dwv-SG-pTh" secondAttribute="trailing" constant="12" id="g2h-zW-ftO"/>
-                            <constraint firstItem="dwv-SG-pTh" firstAttribute="leading" secondItem="Nv4-uh-0q5" secondAttribute="leading" constant="12" id="i89-EC-PCd"/>
-                            <constraint firstItem="V67-mJ-YaZ" firstAttribute="top" secondItem="dwv-SG-pTh" secondAttribute="bottom" constant="14" id="uk1-vX-6NG"/>
+                            <constraint firstItem="Nv4-uh-0q5" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="dwv-SG-pTh" secondAttribute="trailing" constant="12" id="g2h-zW-ftO"/>
+                            <constraint firstItem="dwv-SG-pTh" firstAttribute="leading" relation="lessThanOrEqual" secondItem="Nv4-uh-0q5" secondAttribute="leading" constant="12" id="i89-EC-PCd"/>
+                            <constraint firstItem="Nv4-uh-0q5" firstAttribute="trailing" secondItem="ura-4D-8qN" secondAttribute="trailing" id="nWz-GK-vGN"/>
+                            <constraint firstItem="V67-mJ-YaZ" firstAttribute="top" relation="lessThanOrEqual" secondItem="dwv-SG-pTh" secondAttribute="bottom" constant="14" id="uk1-vX-6NG"/>
                         </constraints>
                     </view>
                     <connections>
