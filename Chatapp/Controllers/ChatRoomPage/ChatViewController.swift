@@ -63,9 +63,9 @@ class ChatViewController: MessagesViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        messageInputBar.inputTextView.becomeFirstResponder()
+
+     
         let usersmessages = listenForMessages(id: "chatroom", shouldScrollToBottom: true)
-        print("######\(usersmessages)")
     }
     
     
@@ -147,21 +147,33 @@ extension ChatViewController: MessagesDataSource, MessagesLayoutDelegate, Messag
         return messages.count
     }
     
+    func messageBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+        let dateString = message.sender.displayName
+            return NSAttributedString(string: dateString, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption2)])
+    }
     
+    func messageBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return 10
+    }
+    
+ 
 }
 
 // MARK: - Setup chatviewcontroller views
 extension ChatViewController {
     
     func prepareViews(){
-    
+        messagesCollectionView.messagesCollectionViewFlowLayout.setMessageIncomingMessageBottomLabelAlignment(LabelAlignment(textAlignment: .left, textInsets: .zero))
+        messagesCollectionView.messagesCollectionViewFlowLayout.setMessageOutgoingMessageBottomLabelAlignment(LabelAlignment(textAlignment: .right, textInsets: .zero))
+        messagesCollectionView.messagesCollectionViewFlowLayout.setMessageOutgoingAvatarSize(.zero)
+        messagesCollectionView.messagesCollectionViewFlowLayout.setMessageIncomingAvatarSize(.zero)
+        messageInputBar.inputTextView.becomeFirstResponder()
     }
     
     
     fileprivate func prepareNavigationBar(){
         let buttonWidth = CGFloat(85)
         let buttonHeight = CGFloat(35)
-        
         let button = UIButton(type: .custom)
         button.setTitle("Log out", for: .normal)
         button.setTitleColor(.white, for: .normal)

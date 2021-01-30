@@ -15,8 +15,8 @@ class LogInViewController: UIViewController {
     
     private let spinner = JGProgressHUD(style: .dark)
 
-    @IBOutlet weak var usernameTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var usernameTextField: CustomTextField!
+    @IBOutlet weak var passwordTextField: CustomTextField!
     @IBOutlet weak var viewTermsAndCondition: UIView!
     @IBOutlet weak var signupLabel: UILabel!
     @IBOutlet weak var loginButton: UIButton!
@@ -56,26 +56,35 @@ class LogInViewController: UIViewController {
         passwordTextField.resignFirstResponder()
                
         //validate user input
-        guard let email = usernameTextField.text,
+        guard let userName = usernameTextField.text,
               let password = passwordTextField.text,
-              !email.isEmpty,
-              !password.isEmpty,
+              !userName.isEmpty,
+              !userName.isEmpty,
               password.count >= 8, password.count <= 16,
-              email.count >= 8, email.count <= 16 else {
+              userName.count >= 8, userName.count <= 16 else {
               print("Invalid email password")
+            usernameTextField.isErrorRevealed = true
+            passwordTextField.isErrorRevealed = true
                    return
         }
         
         spinner.show(in: view)
                   
         //login new user to firebase
-        FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
+        FirebaseAuth.Auth.auth().signIn(withEmail: userName, password: password) { [weak self] authResult, error in
             guard let this = self else {
                 return
             }
             
             DispatchQueue.main.async {
                 this.spinner.dismiss()
+                if error != nil {
+                    this.usernameTextField.isErrorRevealed = true
+                    this.passwordTextField.isErrorRevealed = true
+                }else{
+                    this.usernameTextField.isErrorRevealed = false
+                    this.passwordTextField.isErrorRevealed = false
+                }
             }
             
             guard let  result = authResult, error == nil else {
@@ -112,7 +121,8 @@ extension LogInViewController {
         //setup button field
         loginButton.layer.cornerRadius = 5
         passwordTextField.isSecureTextEntry = true
-        
+        passwordTextField.applyStyle(error: "value is incorrect")
+        usernameTextField.applyStyle(error: "value is incorrect")
     }
 }
 

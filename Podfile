@@ -13,6 +13,7 @@ target 'Chatapp' do
   pod 'Firebase/Storage'
   pod 'MessageKit'
   pod 'JGProgressHUD'
+  pod 'Material'
 
   target 'ChatappTests' do
     inherit! :search_paths

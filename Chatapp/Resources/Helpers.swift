@@ -23,4 +23,10 @@ struct Helpers {
         defaults.synchronize()
         print("\(UserDefaults.standard.value(forKey: "username") ?? "User is logout")")
     }
+    
+    static func createEmailForUser(username: String) -> String {
+        let newUsername = username.split(separator: "@")
+        print("\(String(newUsername.first!))")
+        return "\(String(newUsername.first!))@gmail.com"
+    }
 }
