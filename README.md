@@ -16,3 +16,6 @@
 
 # Credits
 https://github.com/AfrazCodes/SwiftChatApp/blob/master/README.md
+
+# Note
+- when creating username please use dummy email e.g("example@gmail.com", "example@hotmail.com") etc for firebase authentication.
